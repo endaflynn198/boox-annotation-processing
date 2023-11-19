@@ -8,15 +8,15 @@ The Boox Annotation Processing repository provides a simple solution for process
 
 By default, 'shared' Boox annotations can be exported in .txt format to Google Drive, OneNote, or to another app installed on your Boox device by  navigating to `Contents > Annotations > Share` in NeoReader. The exported annotations look like this:
 
-![BooxAnnotations](imgs/boox_annotations.jpg)
+![BooxAnnotations](imgs/boox_annotations.JPG)
 
 This is a bit messy and contains a lot of information that I don't find useful. The Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
 
-![FormattedAnnotations](imgs/formatted_annotations.jpg)
+![FormattedAnnotations](imgs/formatted_annotations.JPG)
 
 And which we can then copy into note-taking software such as Obsidian to look like this:
 
-![ObsidianAnnotations](imgs/obsidian_annotations.jpg)
+![ObsidianAnnotations](imgs/obsidian_annotations.JPG)
 
 
 
