@@ -11,24 +11,24 @@ By default, 'shared' Boox annotations can be exported in `.txt` or `.html` forma
 ### .txt Annotations
 The exported `.txt` annotations look like this:
 
-![BooxAnnotations](imgs/boox_annotations.jpg)
+![BooxAnnotations](imgs/boox_annotations.JPG)
 
 This is a bit messy and contains a lot of information that I don't find useful. The Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
 
-![FormattedAnnotations1](imgs/formatted_annotations.jpg)
+![FormattedAnnotations1](imgs/formatted_annotations.JPG)
 
 And which we can then copy into note-taking software such as Obsidian to look like this:
 
-![ObsidianAnnotations](imgs/obsidian_annotations.jpg)
+![ObsidianAnnotations](imgs/obsidian_annotations.JPG)
 
 ### .html Annotations
 The exported `.html` annotations look like this:
 
-![BooxHTMLAnnotations](imgs/boox_html_annotations.jpg)
+![BooxHTMLAnnotations](imgs/boox_html_annotations.JPG)
 
 And similarly, the Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
 
-![FormattedAnnotations2](imgs/formatted_html_annotations.jpg)
+![FormattedAnnotations2](imgs/formatted_html_annotations.JPG)
 
 
 
