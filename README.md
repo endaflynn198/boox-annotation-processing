@@ -1,22 +1,34 @@
 # Boox Annotation Formatting
 
-This repository contains a Python script and a batch file for processing `.txt` annotations shared from a Boox device.
+This repository contains a Python script and a batch file for processing `.txt` or `.html` annotations shared from a Boox device.
 
 ## Introduction
 
-The Boox Annotation Processing repository provides a simple solution for processing Boox annotations. It allows you to convert the annotations into a formatted output that can be easily imported into note-taking applications like Obsidian.
+The Boox Annotation Processing repository provides a simple solution for processing Boox annotations. It allows you to convert the annotations into a formatted output that can be easily imported into note-taking and personal knowledge base (PKB) applications like [Obsidian](https://obsidian.md/).
 
-By default, 'shared' Boox annotations can be exported in .txt format to Google Drive, OneNote, or to another app installed on your Boox device by  navigating to `Contents > Annotations > Share` in NeoReader. The exported annotations look like this:
+By default, 'shared' Boox annotations can be exported in `.txt` or `.html` format to Google Drive, OneNote, EverNote, or to another app installed on your Boox device by  navigating to `Contents > Annotations > Share` in NeoReader. 
 
-![BooxAnnotations](imgs/boox_annotations.JPG)
+### .txt Annotations
+The exported `.txt` annotations look like this:
+
+![BooxAnnotations](imgs/boox_annotations.jpg)
 
 This is a bit messy and contains a lot of information that I don't find useful. The Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
 
-![FormattedAnnotations](imgs/formatted_annotations.JPG)
+![FormattedAnnotations1](imgs/formatted_annotations.jpg)
 
 And which we can then copy into note-taking software such as Obsidian to look like this:
 
-![ObsidianAnnotations](imgs/obsidian_annotations.JPG)
+![ObsidianAnnotations](imgs/obsidian_annotations.jpg)
+
+### .html Annotations
+The exported `.html` annotations look like this:
+
+![BooxHTMLAnnotations](imgs/boox_html_annotations.jpg)
+
+And similarly, the Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
+
+![FormattedAnnotations2](imgs/formatted_html_annotations.jpg)
 
 
 
@@ -38,14 +50,15 @@ And which we can then copy into note-taking software such as Obsidian to look li
 
 1. Clone or download this repository to your local machine.
 2. Install Regex by running `pip install regex` or `conda install regex` in the command line.
+2. Install BeautifulSoup by running `pip install beautifulsoup4` or `conda install beautifulsoup4` in the command line.
 3. If running through the batch file, configure the batch file as described in the [Usage on Windows](#usage-on-windows) section below.
 
 ## Usage on Windows
 
 The easiest way to run the script is to use the batch file `run_script.bat`. The batch file takes two command line arguments:
 
-- `input_dir`: The path to the directory containing the Boox annotations.
-- `output_dir`: The path to the directory where the formatted output files will be saved.
+- `input_dir`: The path to the directory containing the Boox annotations in `.txt` or `.html` format.
+- `output_dir`: The path to the directory where the formatted `.md` files will be saved.
 
 Here is an example of how to configure the batch file to output directly to an Obsidian vault:
 

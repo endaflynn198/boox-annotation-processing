@@ -1,9 +1,10 @@
 import os
 import regex as re
 import sys
+from bs4 import BeautifulSoup
 
 
-def format_boox_annotations(raw_file):
+def format_boox_txt_annotations(raw_file):
     # replace all lines like "-------------------" with newline character to tidy code
     raw_file = [
         line if line.strip() != "-------------------" else "\n" for line in raw_file
@@ -67,7 +68,6 @@ def format_boox_annotations(raw_file):
                 continue
             # Add non-empty lines to the group
             group_lines.append(line.strip())
-            # new_file.append('\n')  # Append an empty line
 
     # Join any remaining lines in the group (if not followed by a date or empty line)
     if group_lines:
@@ -77,18 +77,74 @@ def format_boox_annotations(raw_file):
     return new_file
 
 
+def format_boox_html_annotations(raw_file):
+    # extract title
+    title = input_file.find("h2").text
+
+    # these are the divs with the chapter titles
+    chapter_titles = input_file.find_all(
+        "div",
+        style="font-size: 14pt; text-align: left; margin-top: 0.5em; margin-bottom: 0.3em;",
+    )
+
+    # quotes
+    quotes = input_file.find_all(
+        "div",
+        style="padding-top: 1em; padding-bottom: 1em; border-top: 1px dotted lightgray;",
+    )
+
+    # create new file
+    new_file = []
+    new_file.append("# " + title.replace(" (Z-Library)", ""))
+    new_file.append("\n\n")
+    
+    # add chapter titles
+    added_chapters = set()
+    for chapter in chapter_titles:
+        # to avoid duplicate chapters...
+        if chapter in added_chapters:
+            continue
+        else: 
+            added_chapters.add(chapter)
+        new_file.append("## " + chapter.text)
+        new_file.append("\n\n")
+        # add quotes for each chapter
+        for quote in quotes:
+            # remove the date from the quote (format: 2023-03-05 18:23:59)
+            date_pattern = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}")
+            quote_stripped = re.sub(date_pattern, "", quote.text)
+
+            # add quote if it's part of the same chapter
+            if quote.previous_sibling.text == chapter.text:
+                new_file.append("- " + quote_stripped)
+                new_file.append("\n\n")
+
+    return new_file
+
+
 def read_input_file(input_file):
-    with open(input_folder + "\\" + input_file, "r", encoding="utf-8") as f:
-        raw_file = f.readlines()
+    if input_file.endswith(".txt"):
+        with open(input_folder + "\\" + input_file, "r", encoding="utf-8") as f:
+            raw_file = f.readlines()
+        # extract the first_line
+        first_line = raw_file[0].strip()
+        # title is between <<>>, use regex to extract
+        title = re.search(r"<<(.*)>>", first_line).group(1)
+        # replace the first line with the title
+        raw_file[0] = title + "\n"
+    
+    elif input_file.endswith(".html"):
+        with open(input_folder + "\\" + input_file, "r", encoding="utf-8") as f:
+            contents = f.read()
+        raw_file = BeautifulSoup(contents, "html.parser")
+        # for HTML inspection in variable explorer
+        # prettyHTML = raw_file.prettify()
+        title = raw_file.find("h2").text
 
-    # extract the first_line
-    first_line = raw_file[0].strip()
-    # title is between <<>>, use regex to extract
-    title = re.search(r"<<(.*)>>", first_line).group(1)
-    # replace the first line with the title
-    raw_file[0] = title + "\n"
-
+   
+    title = title.replace(" (Z-Library)", "")
     return raw_file, title
+
 
 
 if __name__ == "__main__":
@@ -124,7 +180,11 @@ if __name__ == "__main__":
         input_file, title = read_input_file(file)
 
         # format the file
-        new_file = format_boox_annotations(input_file)
+        if file.endswith(".txt"):
+            new_file = format_boox_txt_annotations(input_file)
+        elif file.endswith(".html"):
+            new_file = format_boox_html_annotations(input_file)
+                    
 
         # check if the file exists in the output folder already
         if os.path.exists(output_folder + title + ".md"):
@@ -132,7 +192,7 @@ if __name__ == "__main__":
                 f"The file '{title}' already exists in the output folder and has not been saved.\n"
             )
             continue
-        print(f"Saving '{title}' to the output folder '{output_folder}'.\n")
+        print(f"Saving '{title}' to the output folder.\n")
         # save the new file as .md with the title as the filename
         try:
             with open(output_folder + title + ".md", "w", encoding="utf-8") as f:
