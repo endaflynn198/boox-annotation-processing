@@ -24,11 +24,11 @@ And which we can then copy into note-taking software such as Obsidian to look li
 ### .html Annotations
 The exported `.html` annotations look like this:
 
-![BooxHTMLAnnotations](imgs/boox_html_annotations.JPG)
+![BooxHTMLAnnotations](imgs/boox_html_annotations.jpg)
 
 And similarly, the Boox Annotation Processing script converts the annotations into a more readable format that looks like this:
 
-![FormattedAnnotations2](imgs/formatted_html_annotations.JPG)
+![FormattedAnnotations2](imgs/formatted_html_annotations.jpg)
 
 
 
